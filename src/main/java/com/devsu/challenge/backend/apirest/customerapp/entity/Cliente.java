@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.io.Serial;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "clientes", schema = "public")
 @EqualsAndHashCode(callSuper = false)
 public class Cliente extends Persona {
+
+    @Serial
+    private static final long serialVersionUID = -9015834564155336282L;
 
     @Column(unique = true)
     private String clientId;
