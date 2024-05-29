@@ -6,6 +6,7 @@ import com.devsu.challenge.backend.apirest.customerapp.service.IClienteService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteServiceImpl implements IClienteService {
@@ -17,16 +18,19 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Cliente> getAllClientes() {
         return clienteRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Cliente> getClienteById(Long id) {
         return clienteRepository.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Cliente> getClienteByClientId(String clientId) {
         return clienteRepository.getClienteByClientId(clientId);
     }
