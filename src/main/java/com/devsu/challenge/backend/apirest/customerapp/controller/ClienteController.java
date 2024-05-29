@@ -48,6 +48,15 @@ public class ClienteController {
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/clientid/{clientid}")
+    public ResponseEntity<Cliente> getClienteByClientId(@PathVariable String clientid) {
+        Optional<Cliente> cliente = clienteService.getClienteByClientId(clientid);
+        return cliente
+            .map(cli -> new ResponseEntity<>(cli, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetalles) {
         Cliente updatedCliente = clienteService.updateCliente(id, clienteDetalles);

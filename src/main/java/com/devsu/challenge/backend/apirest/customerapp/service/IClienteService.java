@@ -10,6 +10,8 @@ public interface IClienteService {
 
     Optional<Cliente> getClienteById(Long id);
 
+    Optional<Cliente> getClienteByClientId(String clientId);
+
     Cliente createCliente(Cliente cliente);
 
     Cliente updateCliente(Long id, Cliente detalleCliente);
