@@ -4,6 +4,8 @@ import com.devsu.challenge.backend.apirest.customerapp.entity.Cliente;
 import com.devsu.challenge.backend.apirest.customerapp.service.IClienteService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     private final IClienteService clienteService;
@@ -29,22 +31,36 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.createCliente(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente newCliente = clienteService.createCliente(cliente);
+        return new ResponseEntity<>(newCliente, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public Optional<Cliente> getClienteById(@PathVariable Long id) {
-        return clienteService.getClienteById(id);
+    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
+        Optional<Cliente> cliente = clienteService.getClienteById(id);
+        return cliente
+            .map(cli -> new ResponseEntity<>(cli, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public Cliente updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
-        return clienteService.updateCliente(id, clienteDetails);
+    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetalles) {
+        Cliente updatedCliente = clienteService.updateCliente(id, clienteDetalles);
+        if (updatedCliente == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedCliente, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCliente(@PathVariable Long id) {
-        clienteService.deleteCliente(id);
+    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
+        Optional<Cliente> cliente = clienteService.getClienteById(id);
+        if (cliente.isPresent()) {
+            clienteService.deleteCliente(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
