@@ -26,8 +26,12 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> getAllClientes() {
-        return clienteService.getAllClientes();
+    public ResponseEntity<List<Cliente>> getAllClientes() {
+        List<Cliente> clientes = clienteService.getAllClientes();
+        if (clientes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
 
     @PostMapping
