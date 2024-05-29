@@ -29,10 +29,10 @@ class MsCustomerApplicationTests {
         cliente.setNombre("Juan Perez");
         cliente.setGenero("Masculino");
         cliente.setEdad(30L);
-        cliente.setIdentificacion("1234567890");
+        cliente.setIdentificacion("1234509876");
         cliente.setDireccion("Calle La Calle 123");
         cliente.setTelefono("555-555-555");
-        cliente.setClientId("C123");
+        cliente.setClientId("fakeClientId123");
         cliente.setContrasena("password");
         cliente.setEstado(true);
 

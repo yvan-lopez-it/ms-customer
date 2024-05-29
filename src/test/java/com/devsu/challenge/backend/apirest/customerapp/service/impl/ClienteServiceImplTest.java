@@ -39,10 +39,10 @@ class ClienteServiceImplTest {
         cliente.setNombre("Juan Perez");
         cliente.setGenero("Masculino");
         cliente.setEdad(30L);
-        cliente.setIdentificacion("1234567890");
+        cliente.setIdentificacion("1235468990");
         cliente.setDireccion("Calle La Calle 123");
         cliente.setTelefono("990000000");
-        cliente.setClientId("C123");
+        cliente.setClientId("fakeClientId987");
         cliente.setContrasena("password");
         cliente.setEstado(true);
     }
